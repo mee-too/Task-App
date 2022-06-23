@@ -21,9 +21,13 @@ window.addEventListener('load', ()=> {
         task_input_el.value=task;
         
         task_input_el.setAttribute("readonly", "readonly");
+        //so that the list of tasks are not editable when displayed withut pressing edit
 
+        //make task input a child of task content element
+        //This prevents elements from floating around your document but providing structure.
         task_content_el.appendChild(task_input_el);
-
+        //model the actions 
+        //container for action elements
         const task_action_el = document.createElement('div');
         task_action_el.classList.add('actions');
 
@@ -39,15 +43,18 @@ window.addEventListener('load', ()=> {
         task_action_el.appendChild(task_del_el);
 
         task_el.appendChild(task_action_el);
-
+         //we need to reset the value so that you can put in a new value and the value goes to the bottom
         input.value='';
 
         list_el.appendChild(task_el);
-
+        //we need to give the user a way to edit and delete
         task_edit_el.addEventListener('click', (e)=>{
             if(task_edit_el.innerText.toLowerCase()=="edit"){
+                //meaning if task receives edit then do...
                 task_edit_el.innerText="Save";
+                //because when editing the next action is save
                 task_input_el.removeAttribute("readonly");
+                //make the task editable
                 task_input_el.focus();
             }else{
                 task_edit_el.innerText="Edit";
@@ -55,9 +62,19 @@ window.addEventListener('load', ()=> {
             } 
         });
 
+        function validateForm() {
+            let x = document.forms["task_form"]["new-task-input"].value;
+            if (x == "") {
+              alert("Task must be filled out");
+              return false;
+            }
+          }
+
         task_del_el.addEventListener('click', (e)=>{
             list_el.removeChild(task_el);
+            //This is that when the delete button is pressed task element is removed
         });
-
+     //assignment is to figure out how to validate so that you don't have blanck notes
+     //git touch git_log.txt
     });
 });
